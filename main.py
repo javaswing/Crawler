@@ -1,7 +1,7 @@
 from flask import Flask
 from service.douyin.urls import douyin
 from service.kuaishou.urls import kuaishou
-from service.bilibili.urls  import bilibili
+from service.bilibili.urls import bilibili
 from service.xhs.urls import xhs
 from service.taobao.urls import taobao
 from service.jd.urls import jd
@@ -18,6 +18,7 @@ app.register_blueprint(taobao, url_prefix="/taobao")
 app.register_blueprint(jd, url_prefix="/jd")
 app.register_blueprint(weibo, url_prefix="/weibo")
 
+
 def init_service():
     config_file = "config/config.yaml"
     with open(config_file, 'r') as f:
@@ -25,6 +26,7 @@ def init_service():
     logger.setup(config)
     app.logger.handlers = logger.get_logger().handlers
     app.logger.setLevel(logger.get_logger().level)
+
 
 init_service()
 

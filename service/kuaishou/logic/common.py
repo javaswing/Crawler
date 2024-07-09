@@ -4,6 +4,8 @@ import requests
 
 HOST = 'https://www.kuaishou.com'
 
+LIVE_HOST = 'https://live.kuaishou.com'
+
 COMMON_HEADERS = {
     "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
     "Cache-Control": "no-cache",
