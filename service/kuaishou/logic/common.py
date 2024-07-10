@@ -29,6 +29,7 @@ GRAPHQL_DIR = 'service/kuaishou/logic/graphql/'
 
 
 class GraphqlQuery(Enum):
+    SEARCH_USER = 'search_user'
     SEARCH = 'search'
     DETAIL = 'detail'
     COMMENTS = 'comments'
@@ -36,15 +37,16 @@ class GraphqlQuery(Enum):
     PROFILE = 'profile'
     PROFILE_PHOTO = 'profile_photo'
 
+
 GRAPHQL_FILES = {
     GraphqlQuery.SEARCH: 'search_query.graphql',
+    GraphqlQuery.SEARCH_USER: 'search_query_user.graphql',
     GraphqlQuery.DETAIL: 'video_detail.graphql',
     GraphqlQuery.COMMENTS: 'comment_list.graphql',
     GraphqlQuery.REPLYS: 'replys.graphql',
     GraphqlQuery.PROFILE: 'profile.graphql',
     GraphqlQuery.PROFILE_PHOTO: 'profile_photo.graphql'
-    }
-
+}
 
 graphql = {}
 for type, file in GRAPHQL_FILES.items():
@@ -52,8 +54,10 @@ for type, file in GRAPHQL_FILES.items():
         graphql_queries = f.read()
         graphql[type] = graphql_queries
 
+
 def load_graphql_queries(type: GraphqlQuery) -> str:
     return graphql.get(type)
+
 
 def common_request(data: dict, headers: dict) -> tuple[dict, bool]:
     """

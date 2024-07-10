@@ -13,13 +13,14 @@ def search():
     keyword = request.args.get('keyword', '')
     offset = int(request.args.get('offset', 0))
     limit = int(request.args.get('limit', 20))
+    search_type = request.args.get('search_type', 'video')
 
     _accounts = accounts.load()
     random.shuffle(_accounts)
     for account in _accounts:
         if account.get('expired', 0) == 1:
             continue
-        res, succ = request_search(keyword, account.get('cookie', ''), offset, limit)
+        res, succ = request_search(keyword, account.get('cookie', ''), offset, limit, search_type)
         if not succ:
             accounts.expire(account.get('id', ''))
         if res == {} or not succ:

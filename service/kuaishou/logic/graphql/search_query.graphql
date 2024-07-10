@@ -1,4 +1,4 @@
-fragment photoContent on PhotoEntity {
+ fragment photoContent on PhotoEntity {
   __typename
   id
   duration
@@ -27,6 +27,8 @@ fragment photoContent on PhotoEntity {
   stereoType
   profileUserTopPhoto
   musicBlocked
+  riskTagContent
+  riskTagUrl
 }
 
 fragment recoPhotoFragment on recoPhotoEntity {
@@ -58,6 +60,8 @@ fragment recoPhotoFragment on recoPhotoEntity {
   stereoType
   profileUserTopPhoto
   musicBlocked
+  riskTagContent
+  riskTagUrl
 }
 
 fragment feedContent on Feed {
