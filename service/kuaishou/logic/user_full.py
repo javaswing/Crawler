@@ -1,5 +1,4 @@
 import json
-import re
 
 import requests
 from bs4 import BeautifulSoup
@@ -16,6 +15,8 @@ def request_user_full(id: str, cookie: str) -> tuple[dict, bool]:
     ret = {}
 
     url = f'{LIVE_HOST}/u/{id}'
+
+    print(url)
 
     headers = {"cookie": cookie}
     headers.update(common.COMMON_HEADERS)
@@ -41,18 +42,19 @@ def request_user_full(id: str, cookie: str) -> tuple[dict, bool]:
             end = script_content.find(';(function()')
             json_data = script_content[start:end]
             json_str_fixed = json_data.replace('undefined', 'null')
+            logger.debug(json_str_fixed)
             try:
                 initial_state = json.loads(json_str_fixed)
                 author_info = initial_state.get('liveroom', {}).get('playList', [])[0].get('author', {})
                 ret = author_info
                 # 提取并解析 author 信息
                 if author_info is not None:
-                    print('Author Info:', author_info)
+                    logger.info('Author Info:', author_info)
                 else:
-                    print('Author information not found in __INITIAL_STATE__')
+                    logger.warning('Author information not found in __INITIAL_STATE__')
             except json.JSONDecodeError as e:
-                print(f"Error decoding JSON: {e}")
+                logger.error(f"Error decoding JSON: {e}")
         else:
-            print('Script tag with __INITIAL_STATE__ not found')
+            logger.warning('Script tag with __INITIAL_STATE__ not found')
 
     return ret, True
