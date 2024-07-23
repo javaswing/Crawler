@@ -20,7 +20,6 @@ def request_user_full(k_id: str, cookie: str) -> tuple[dict, bool]:
         "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
         "Cache-Control": "max-age=0",
         "Connection": "keep-alive",
-        "Referer": "https://live.kuaishou.com/",
         "Sec-Fetch-Dest": "document",
         "Sec-Fetch-Mode": "navigate",
         "Sec-Fetch-Site": "same-origin",
@@ -31,10 +30,19 @@ def request_user_full(k_id: str, cookie: str) -> tuple[dict, bool]:
         "sec-ch-ua-mobile": "?0",
         "sec-ch-ua-platform": "\"macOS\""
     }
-    headers.update({'cookies': cookie})
+    cookies = {
+        "did": "web_e10acf909ca50dd2b45cccf7587c201a",
+        "userId": "1642623350",
+        "kuaishou.live.bfb1s": "7206d814e5c089a58c910ed8bf52ace5",
+        "clientid": "3",
+        "client_key": "65890b29",
+        # "kpn": "GAME_ZONE",
+        "kuaishou.live.web_st": "ChRrdWFpc2hvdS5saXZlLndlYi5zdBKgAdSn3j0vbKMYfpkpMkbqg1ELAw-NTtnxIYCotLHYFwtYEj1GgyJMVByWEcd4xq0nXM6tNDdpwQb485SRytpd8ese7lYW9HX0is8VFe-8x2TAxAzbUJYmfQdXFnJCZoEyJUkJzT6otUNSkER1OmNbyXBz3tErhnEpZwp2w-LyP6QgIflNsEvAaxA0UPdvkPn9nB3SfgkUzIHXuMQkZevYPssaEoJNhwQ4OUDtgURWN6k9Xgm8PSIg-LrQEsTk0qBGsKMhHG1ci-AHTqO2TP8H0YBVAnwBbXYoBTAB",
+        "kuaishou.live.web_ph": "0fa4fbc81c2554b95f0ef9157098b9f269e2"
+    }
     response_html = None
     try:
-        response = requests.get(url=url, headers=headers)
+        response = requests.get(url=url, headers=headers, cookies=cookies)
         response_html = response.text
     except requests.exceptions.HTTPError as http_err:
         logger.error(f'HTTP error occurred: {http_err}')
