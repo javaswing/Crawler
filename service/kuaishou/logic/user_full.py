@@ -8,15 +8,30 @@ from . import common
 from .common import LIVE_HOST
 
 
-def request_user_full(id: str, cookie: str) -> tuple[dict, bool]:
+def request_user_full(k_id: str, cookie: str) -> tuple[dict, bool]:
     """
     请求快手全量用户信息
     """
     ret = {}
-    url = f'{LIVE_HOST}/u/{id}'
+    url = f'{LIVE_HOST}/u/{k_id}'
     print(url)
-    headers = {}
-    headers.update(common.COMMON_HEADERS)
+    headers = {
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+        "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+        "Cache-Control": "max-age=0",
+        "Connection": "keep-alive",
+        "Referer": "https://live.kuaishou.com/",
+        "Sec-Fetch-Dest": "document",
+        "Sec-Fetch-Mode": "navigate",
+        "Sec-Fetch-Site": "same-origin",
+        "Sec-Fetch-User": "?1",
+        "Upgrade-Insecure-Requests": "1",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0",
+        "sec-ch-ua": "\"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"126\", \"Microsoft Edge\";v=\"126\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": "\"macOS\""
+    }
+    headers.update({'cookies': cookie})
     response_html = None
     try:
         response = requests.get(url=url, headers=headers)
