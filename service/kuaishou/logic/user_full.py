@@ -13,12 +13,9 @@ def request_user_full(id: str, cookie: str) -> tuple[dict, bool]:
     请求快手全量用户信息
     """
     ret = {}
-
     url = f'{LIVE_HOST}/u/{id}'
-
     print(url)
-
-    headers = {"cookie": cookie}
+    headers = {}
     headers.update(common.COMMON_HEADERS)
     response_html = None
     try:
@@ -42,14 +39,14 @@ def request_user_full(id: str, cookie: str) -> tuple[dict, bool]:
             end = script_content.find(';(function()')
             json_data = script_content[start:end]
             json_str_fixed = json_data.replace('undefined', 'null')
-            logger.debug(json_str_fixed)
+            print(json_str_fixed)
             try:
                 initial_state = json.loads(json_str_fixed)
                 author_info = initial_state.get('liveroom', {}).get('playList', [])[0].get('author', {})
                 ret = author_info
                 # 提取并解析 author 信息
                 if author_info is not None:
-                    logger.info('Author Info:', author_info)
+                    print(author_info)
                 else:
                     logger.warning('Author information not found in __INITIAL_STATE__')
             except json.JSONDecodeError as e:

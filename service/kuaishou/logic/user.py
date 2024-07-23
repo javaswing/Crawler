@@ -1,5 +1,6 @@
 from .common import common_request, load_graphql_queries, GraphqlQuery
 
+
 def request_user(id: str, cookie: str, offset: int = 0, limit: int = 20) -> tuple[dict, bool]:
     """
     请求抖音获取用户信息
