@@ -6,7 +6,7 @@ from lib.logger import logger
 from utils.error_code import ErrorCode
 from utils.reply import reply
 from ..logic.user_full import request_user_full
-from ..models import accounts
+from ..models import accounts_live
 
 
 # route
@@ -16,14 +16,14 @@ def user_full():
     """
     id = request.args.get('id', '')
 
-    _accounts = accounts.load()
+    _accounts = accounts_live.load()
     random.shuffle(_accounts)
     for account in _accounts:
         if account.get('expired', 0) == 1:
             continue
         res, succ = request_user_full(id, account.get('cookie', ''))
         if not succ:
-            accounts.expire(account.get('id', ''))
+            accounts_live.expire(account.get('id', ''))
         if res == {} or not succ:
             continue
         logger.info(f'get user detail success, id: {id}, res: {res}')
