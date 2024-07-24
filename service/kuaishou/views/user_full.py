@@ -14,19 +14,19 @@ def user_full():
     """
     获取用户信息
     """
-    id = request.args.get('id', '')
+    u_id = request.args.get('id', '')
 
     _accounts = accounts_live.load()
     random.shuffle(_accounts)
     for account in _accounts:
         if account.get('expired', 0) == 1:
             continue
-        res, succ = request_user_full(id, account.get('cookie', ''))
+        res, succ = request_user_full(u_id, account.get('cookie', ''))
         if not succ:
             accounts_live.expire(account.get('id', ''))
         if res == {} or not succ:
             continue
-        logger.info(f'get user detail success, id: {id}, res: {res}')
+        logger.info(f'get user detail success, id: {u_id}, res: {res}')
         return reply(ErrorCode.OK, '成功', res)
-    logger.warning(f'get user detail failed, don\'t have enough effective account. id: {id}')
+    logger.warning(f'get user detail failed, don\'t have enough effective account. id: {u_id}')
     return reply(ErrorCode.INTERNAL_ERROR, '内部错误请重试')
