@@ -22,6 +22,7 @@ def user_full():
         if account.get('expired', 0) == 1:
             continue
         res, succ = request_user_full(id, account.get('cookie', ''))
+        print(res)
         if not succ:
             accounts.expire(account.get('id', ''))
         if res == {} or not succ:

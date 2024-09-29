@@ -34,7 +34,7 @@ def request_user_full(id: str, cookie: str) -> tuple[dict, bool]:
         soup = BeautifulSoup(response_html, 'html.parser')
         # 查找包含 'window.__INITIAL_STATE__' 的脚本标签
         script_tag = soup.find('script', text=lambda x: x and 'window.__INITIAL_STATE__' in x)
-
+        print(script_tag)
         if script_tag:
             # 提取并解析 'window.__INITIAL_STATE__' 的 JSON 数据
             script_content = script_tag.string
