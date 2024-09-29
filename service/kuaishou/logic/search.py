@@ -28,6 +28,8 @@ def request_search(keyword: str, cookie: str,  offset: int = 0, limit: int = 20,
             data['variables']['page'] = "search"
             if search_session_id and search_session_id != '':
                 data['variables']['searchSessionId'] = search_session_id
+        else:
+            headers['Referer'] = f'https://www.kuaishou.com/search/author?searchKey={keyword}'
         resp, succ = common_request(data, headers)
         if not succ:
             return {}, succ
