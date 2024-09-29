@@ -49,7 +49,7 @@ def request_user_full(id: str, cookie: str) -> tuple[dict, bool]:
                 ret = author_info
                 # 提取并解析 author 信息
                 if author_info is not None:
-                    logger.info('Author Info:', author_info)
+                    logger.info(f'Author Info: {author_info}')
                 else:
                     logger.warning('Author information not found in __INITIAL_STATE__')
             except json.JSONDecodeError as e:
